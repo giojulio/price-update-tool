@@ -21,7 +21,8 @@ export abstract class BaseDatabase {
   protected async getItem(value: number) {
     const result = await BaseDatabase.connection(this.TABLE_NAME)
       .select()
-      .where({ code: value });
+      .where({ code: value })
+      .orWhere({ pack_id: value });
 
     return result;
   }

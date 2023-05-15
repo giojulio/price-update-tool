@@ -1,5 +1,7 @@
 import { ProductDatabase } from "../database/ProductsDatabase";
-import { ItemDTO, ItemType } from "../models/ProductDTO";
+import { MissingData } from "../error/MissingData";
+import { ItemType } from "../models/Product";
+import { catchError } from "./services/CatchError";
 
 const productDatabase = new ProductDatabase();
 
@@ -9,22 +11,29 @@ export class ProductBusiness {
       const item = await productDatabase.findItem(code);
 
       if (!item.length) {
-        // throw error
+        throw new MissingData();
       }
 
       return item;
     } catch (error: any) {
-      //throw error
+      catchError(error);
     }
   };
 
   updateItem = async (product: ItemType) => {
     try {
+      if (
+        !product ||
+        product.code ||
+        product.cost_price ||
+        product.name ||
+        product.sales_price
+      ) {
+        throw new MissingData();
+      }
       const data = await productDatabase.updateItem(product);
-      //is pack
-      return data;
     } catch (error: any) {
-      //throw error
+      catchError(error);
     }
   };
 }
