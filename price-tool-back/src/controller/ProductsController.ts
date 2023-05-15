@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ProductBusiness } from "../business/ProductsBusiness";
-import { ItemType } from "../models/ProductDTO";
+import { ItemType } from "../models/Product";
 
 export class ProductController {
   findItem = async (req: Request, res: Response) => {
@@ -9,7 +9,7 @@ export class ProductController {
 
       const item = await new ProductBusiness().findItem(Number(code));
 
-      // res.status(200).send({ item });
+      res.status(200).send({ item });
     } catch (error: any) {
       res.status(400).send(error.message || error.sqlMessage);
     }
@@ -27,6 +27,8 @@ export class ProductController {
       };
 
       await new ProductBusiness().updateItem(newData);
+
+      res.status(200).send("Changes made.");
     } catch (error: any) {
       res.status(400).send(error.message || error.sqlMessage);
     }

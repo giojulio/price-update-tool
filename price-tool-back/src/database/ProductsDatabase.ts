@@ -1,4 +1,4 @@
-import { ItemDTO, ItemType } from "../models/ProductDTO";
+import { ItemDTO, ItemType } from "../models/Product";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class ProductDatabase extends BaseDatabase {
